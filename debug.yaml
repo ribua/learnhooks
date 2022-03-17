@@ -1,0 +1,10 @@
+---
+- hosts: all
+  gather_facts: false
+  
+  tasks:
+    - ansible.builtin.command: cat /etc/motd
+      register: mymotd
+      
+    - ansible.builtin.debug:
+        var: mymotd
