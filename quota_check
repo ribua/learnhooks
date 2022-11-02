@@ -1,0 +1,126 @@
+spec:
+  quota:
+    hard:
+      limits.cpu: "48"
+      limits.memory: 720Gi
+      persistentvolumeclaims: "80"
+      requests.cpu: "48"
+      requests.memory: 720Gi
+      trident-ontap-mw.storageclass.storage.k8s.io/requests.storage: 800Gi
+  selector:
+    labels:
+      matchLabels:
+        quota: jungle2-clusterquota
+status:
+  namespaces:
+  - namespace: thejungle2-prod-tm-qi1001
+    status:
+      hard:
+        limits.cpu: "48"
+        limits.memory: 720Gi
+        persistentvolumeclaims: "80"
+        requests.cpu: "48"
+        requests.memory: 720Gi
+        trident-ontap-mw.storageclass.storage.k8s.io/requests.storage: 800Gi
+      used:
+        limits.cpu: 1950m
+        limits.memory: 3672Mi
+        persistentvolumeclaims: "4"
+        requests.cpu: 500m
+        requests.memory: 812Mi
+        trident-ontap-mw.storageclass.storage.k8s.io/requests.storage: 26Gi
+  - namespace: thejungle2-proj1-qi1001
+    status:
+      hard:
+        limits.cpu: "48"
+        limits.memory: 720Gi
+        persistentvolumeclaims: "80"
+        requests.cpu: "48"
+        requests.memory: 720Gi
+        trident-ontap-mw.storageclass.storage.k8s.io/requests.storage: 800Gi
+      used:
+        limits.cpu: 12150m
+        limits.memory: 42584Mi
+        persistentvolumeclaims: "20"
+        requests.cpu: 4700m
+        requests.memory: 8492Mi
+        trident-ontap-mw.storageclass.storage.k8s.io/requests.storage: 346Gi
+  - namespace: thejungle2-admin-qi1001
+    status:
+      hard:
+        limits.cpu: "48"
+        limits.memory: 720Gi
+        persistentvolumeclaims: "80"
+        requests.cpu: "48"
+        requests.memory: 720Gi
+        trident-ontap-mw.storageclass.storage.k8s.io/requests.storage: 800Gi
+      used:
+        limits.cpu: 6850m
+        limits.memory: 24Gi
+        persistentvolumeclaims: "3"
+        requests.cpu: 1300m
+        requests.memory: 3Gi
+        trident-ontap-mw.storageclass.storage.k8s.io/requests.storage: 5Gi
+  - namespace: thejungle2-prod-mw-qi1001
+    status:
+      hard:
+        limits.cpu: "48"
+        limits.memory: 720Gi
+        persistentvolumeclaims: "80"
+        requests.cpu: "48"
+        requests.memory: 720Gi
+        trident-ontap-mw.storageclass.storage.k8s.io/requests.storage: 800Gi
+      used:
+        limits.cpu: 10850m
+        limits.memory: 44632Mi
+        persistentvolumeclaims: "10"
+        requests.cpu: 3850m
+        requests.memory: 8492Mi
+        trident-ontap-mw.storageclass.storage.k8s.io/requests.storage: 146Gi
+  - namespace: thejungle2-bi-qi1001
+    status:
+      hard:
+        limits.cpu: "48"
+        limits.memory: 720Gi
+        persistentvolumeclaims: "80"
+        requests.cpu: "48"
+        requests.memory: 720Gi
+        trident-ontap-mw.storageclass.storage.k8s.io/requests.storage: 800Gi
+      used:
+        limits.cpu: 7050m
+        limits.memory: 19756Mi
+        persistentvolumeclaims: "3"
+        requests.cpu: 2050m
+        requests.memory: 7718Mi
+        trident-ontap-mw.storageclass.storage.k8s.io/requests.storage: 24Gi
+  - namespace: thejungle2-starburst-qi1001
+    status:
+      hard:
+        limits.cpu: "48"
+        limits.memory: 720Gi
+        persistentvolumeclaims: "80"
+        requests.cpu: "48"
+        requests.memory: 720Gi
+        trident-ontap-mw.storageclass.storage.k8s.io/requests.storage: 800Gi
+      used:
+        limits.cpu: "9"
+        limits.memory: 26Gi
+        persistentvolumeclaims: "0"
+        requests.cpu: 8050m
+        requests.memory: 24832Mi
+        trident-ontap-mw.storageclass.storage.k8s.io/requests.storage: "0"
+  total:
+    hard:
+      limits.cpu: "48"
+      limits.memory: 720Gi
+      persistentvolumeclaims: "80"
+      requests.cpu: "48"
+      requests.memory: 720Gi
+      trident-ontap-mw.storageclass.storage.k8s.io/requests.storage: 800Gi
+    used:
+      limits.cpu: 47850m
+      limits.memory: 161844Mi
+      persistentvolumeclaims: "40"
+      requests.cpu: 20450m
+      requests.memory: 53418Mi
+      trident-ontap-mw.storageclass.storage.k8s.io/requests.storage: 547Gi
