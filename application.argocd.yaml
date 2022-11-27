@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+  labels:
+    app.kubernetes.io/instance: argo-cd-applications-helm
+  name: etcd-backup
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: etcd-backup
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: Cluster/dev/applications/etcd-backup
+    plugin:
+      env:
+      - name: AVP_K8S_ROLE
+        value: k8s-read-base-ocp4-dev
+      - name: AVP_TYPE
+        value: vault
+      - name: VAULT_ADDR
+        value: https://vault.test
+      - name: AVP_AUTH_TYPE
+        value: k8s
+      - name: AVP_VAULT_CACERT
+        value: /app/config/tls/cert.pem
+      - name: VAULT_SKIP_VERIFY
+        value: "true"
+      - name: AVP_K8S_MOUNT_PATH
+        value: auth/kubernetes/ocp4-dev
+      - name: VAULT_NAMESPACE
+        value: openshift-vault
+      name: argocd-vault-plugin-helm
+    repoURL: https://github.com/org-repo.git
+    targetRevision: master
+  syncPolicy:
+    automated:
+      selfHeal: true
