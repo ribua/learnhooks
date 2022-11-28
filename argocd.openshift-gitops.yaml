@@ -83,7 +83,7 @@ spec:
       p, role:org-admin, applications, create, */*, allow
       p, role:org-admin, applications, update, */*, allow
       p, role:org-admin, applications, sync,   */*, allow
-      g, cpaas_admins, role:org-admin
+      g, admins, role:org-admin
     scopes: '[groups]'
   redis:
     resources:
