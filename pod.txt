@@ -1,0 +1,15 @@
+$ oc get pods
+NAME                                   READY   STATUS             RESTARTS          AGE
+powermax-controller-694b7b867d-b9t92   5/5     Running            0                 10d
+powermax-controller-694b7b867d-cwpfv   5/5     Running            3                 10d
+powermax-node-5qtxz                    2/2     Running            6                 24d
+powermax-node-cr9cj                    2/2     Running            6                 24d
+powermax-node-dxjvd                    2/2     Running            6                 24d
+powermax-node-fhwzt                    2/2     Running            6                 19d
+powermax-node-gdrdg                    2/2     Running            6                 24d
+powermax-node-glfj5                    1/2     CrashLoopBackOff   1691 (2m8s ago)   6d
+powermax-node-hz6wm                    2/2     Running            6                 19d
+powermax-node-nbbqf                    2/2     Running            10                24d
+powermax-node-zsdlj                    2/2     Running            10                24d
+
+
