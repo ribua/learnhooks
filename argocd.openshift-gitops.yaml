@@ -64,9 +64,9 @@ spec:
         memory: 128Mi
   image: quay.io/rabraham/redhat-cert-vault
   initialRepositories: |
-    - name: cpaas-non-prod
+    - name: development-repo
       type: git
-      url: https://github.service.anz/ics/cpaas-non-prod.git
+      url: https://github.com/myrepo/org-repo.git
       insecure: true
   initialSSHKnownHosts: {}
   notifications:
