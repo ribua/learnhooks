@@ -1,0 +1,12 @@
+LAST SEEN   TYPE     REASON                   OBJECT                                           MESSAGE
+24m         Normal   WaitForFirstConsumer     persistentvolumeclaim/dynamic-fc-powermax-pvc    waiting for first consumer to be created before binding
+24m         Normal   Provisioning             persistentvolumeclaim/dynamic-fc-powermax-pvc    External provisioner is provisioning volume for claim "ribu-test/dynamic-fc-powermax-pvc"
+24m         Normal   ExternalProvisioning     persistentvolumeclaim/dynamic-fc-powermax-pvc    waiting for a volume to be created, either by external provisioner "csi-powermax.dellemc.com" or manually created by system administrator
+24m         Normal   ProvisioningSucceeded    persistentvolumeclaim/dynamic-fc-powermax-pvc    Successfully provisioned volume pmax-a23bdd02ab
+24m         Normal   Scheduled                pod/powermax-fc-pod                              Successfully assigned ribu-test/powermax-fc-pod to docpa104s
+24m         Normal   SuccessfulAttachVolume   pod/powermax-fc-pod                              AttachVolume.Attach succeeded for volume "pmax-a23bdd02ab"
+24m         Normal   AddedInterface           pod/powermax-fc-pod                              Add eth0 [100.121.35.203/22] from ovn-kubernetes
+24m         Normal   Pulling                  pod/powermax-fc-pod                              Pulling image "dtrqa.docker.service.anz/base-images/centos:latest"
+24m         Normal   Pulled                   pod/powermax-fc-pod                              Successfully pulled image "dtrqa.docker.service.anz/base-images/centos:latest" in 7.176869952s
+24m         Normal   Created                  pod/powermax-fc-pod                              Created container task-pv-container
+24m         Normal   Started                  pod/powermax-fc-pod                              Started container task-pv-container
