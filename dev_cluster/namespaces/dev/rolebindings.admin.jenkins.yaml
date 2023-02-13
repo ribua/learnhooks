@@ -1,0 +1,14 @@
+apiVersion: authorization.openshift.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app: jenkins-ephemeral
+    template: jenkins-ephemeral-template
+  name: jenkins-admin
+  namespace: dev
+roleRef:
+  kind: ClusterRole
+  name: customer-admin
+subjects:
+- kind: ServiceAccount
+  name: jenkins

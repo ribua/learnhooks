@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: openshift-compliance
+  annotations:
+    openshift.io/comments: 'OpenShift4 Compliance Operator'
+    openshift.io/description: Compliance Operator Shared Dev
+    openshift.io/display-name: openshift-compliance
+    openshift.io/node-selector: ""
+    argocd.argoproj.io/sync-wave: "1"
+  labels:
+    openshift.io/cluster-monitoring: "true"
+    app.kubernetes.io/managed-by: argo-git
+    poc: "false"

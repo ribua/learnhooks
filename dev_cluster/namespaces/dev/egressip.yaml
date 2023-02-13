@@ -1,0 +1,14 @@
+apiVersion: k8s.ovn.org/v1
+kind: EgressIP
+metadata:
+  name: egressip
+  annotations:
+    app.kubernetes.io/managed-by: argo-git
+  labels:
+    app.kubernetes.io/instance: instance
+spec:
+  egressIPs:
+  - 10.204.254.212
+  namespaceSelector:
+    matchLabels:
+      egress.test/namespace: dev

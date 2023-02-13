@@ -1,0 +1,18 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: Validate=false
+  labels:
+    app.kubernetes.io/managed-by: argo-git
+  name: codefresh-admin
+  namespace: dev
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: customer-admin
+subjects:
+- kind: ServiceAccount
+  name: dse-codefresh
+  namespace: dev
+

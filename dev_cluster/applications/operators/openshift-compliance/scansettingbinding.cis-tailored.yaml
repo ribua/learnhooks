@@ -1,0 +1,18 @@
+apiVersion: compliance.openshift.io/v1alpha1
+kind: ScanSettingBinding
+metadata:
+  name: cis-compliance
+  namespace: openshift-compliance
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+profiles:
+- apiGroup: compliance.openshift.io/v1alpha1
+  kind: TailoredProfile
+  name: ocp4-cis-tailored
+- apiGroup: compliance.openshift.io/v1alpha1
+  kind: Profile
+  name: ocp4-cis
+settingsRef:
+  apiGroup: compliance.openshift.io/v1alpha1
+  kind: ScanSetting
+  name: default

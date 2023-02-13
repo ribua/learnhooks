@@ -1,0 +1,25 @@
+apiVersion: compliance.openshift.io/v1alpha1
+kind: ScanSetting
+metadata:
+  name: default
+  namespace: openshift-compliance
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+# Suite-specific settings
+autoApplyRemediations: false
+schedule: "0 0 5 * *"
+debug: true
+# Scan-specific settings
+rawResultStorage:
+  size: "2Gi"
+  rotation: 10
+# For each role, a separate scan will be created pointing
+# to a node-role specified in roles
+roles:
+  - worker
+  - master
+  - infra
+  - customer-ingress
+  - apimesh-ingress
+  - oacb-blue-ingress
+  - oacb-green-ingress

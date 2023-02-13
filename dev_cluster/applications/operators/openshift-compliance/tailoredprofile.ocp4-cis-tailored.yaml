@@ -1,0 +1,107 @@
+apiVersion: compliance.openshift.io/v1alpha1
+kind: TailoredProfile
+metadata:
+  name: ocp4-cis-tailored
+  namespace: openshift-compliance
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+spec:
+  description: CIS Tailored profile
+  disableRules:
+  - name: ocp4-kubelet-disable-hostname-override
+    rationale: Allowing hostnames to be overridden creates issues around resolving nodes in addition to TLS configuration, certificate validation, and log correlation and validation. However, in some cases explicit overriding this parameter is necessary to ensure that the appropriate node name stays as it is in case of certain upgrade conditions. e.g. as is the case in AWS and OpenStack when migrating to external cloud providers.
+  - name: ocp4-api-server-api-priority-v1alpha1-flowschema-catch-all
+    rationale: The FlowSchema API objects enforce a limit on the number of events that the API Server will accept in a given time slice In a large multi-tenant cluster, there might be a small percentage of misbehaving tenants which could have a significant impact on the performance of the cluster overall. It is recommended to limit the rate of events that the API Server will accept.
+  - name: ocp4-api-server-oauth-https-serving-cert
+    rationale: Connections between the kube-apiserver and the extension openshift-oauth-apiserver could potentially carry sensitive data such as secrets and keys. It is important to use in-transit encryption for any communication between the kube-apiserver and the extension openshift-apiserver.
+  - name: ocp4-rbac-limit-cluster-admin
+    rationale: Kubernetes provides a set of default roles where RBAC is used. Some of these roles such as cluster-admin provide wide-ranging privileges which should only be applied where absolutely necessary. Roles such as cluster-admin allow super-user access to perform any action on any resource. When used in a ClusterRoleBinding, it gives full control over every resource in the cluster and in all namespaces. When used in a RoleBinding, it gives full control over every resource in the rolebinding's namespace, including the namespace itself.
+  - name: ocp4-general-namespaces-in-use
+    rationale: Limiting the scope of user permissions can reduce the impact of mistakes or malicious activities. A Kubernetes namespace allows you to partition created resources into logically named groups. Resources created in one namespace can be hidden from other namespaces. By default, each resource created by a user in Kubernetes cluster runs in a default namespace, called default. You can create additional namespaces and attach resources and users to them. You can use Kubernetes Authorization plugins to create policies that segregate access to namespace resources between different users.
+  - name: ocp4-secrets-consider-external-storage
+    rationale: Kubernetes supports secrets as first-class objects, but care needs to be taken to ensure that access to secrets is carefully limited. Using an external secrets provider can ease the management of access to secrets, especially where secrets are used across both Kubernetes and non-Kubernetes environments.
+  - name: ocp4-secrets-no-environment-variables
+    rationale: Environment variables are subject and very susceptible to malicious hijacking methods by an adversary, as such, environment variables should never be used for secrets.
+  - name: ocp4-file-owner-proxy-kubeconfig
+    rationale: The kubeconfig file for kube-proxy provides permissions to the kube-proxy service. The proxy kubeconfig file contains information about the administrative configuration of the OpenShift cluster that is configured on the system. Protection of this file is critical for OpenShift security. The file is provided via a ConfigMap mount, so the kubelet itself makes sure that the file permissions are appropriate for the container taking it into use.
+  - name: ocp4-file-groupowner-proxy-kubeconfig
+    rationale: The kubeconfig file for kube-proxy provides permissions to the kube-proxy service. The proxy kubeconfig file contains information about the administrative configuration of the OpenShift cluster that is configured on the system. Protection of this file is critic
+  - name: ocp4-scc-limit-net-raw-capability
+    rationale: By default, containers run with a default set of capabilities as assigned by the Container Runtime which can include dangerous or highly privileged capabilities. If the CAP_NET_RAW is enabled, it may be misused by malicious containers or attackers.
+  - name: ocp4-scc-drop-container-capabilities
+    rationale: By default, containers run with a default set of capabilities as assigned by the Container Runtime which can include dangerous or highly privileged capabilities. Capabilities should be dropped unless absolutely critical for the container to run software as added capabilities that are not required allow for malicious containers or attackers.
+  - name: ocp4-scc-limit-ipc-namespace
+    rationale: A container running in the host's IPC namespace can use IPC to interact with processes outside the container potentially allowing an attacker to exploit a host process thereby enabling an attacker to exploit other services.
+  - name: ocp4-scc-limit-network-namespace
+    rationale: A container running in the host's network namespace could access the host network traffic to and from other pods potentially allowing an attacker to exploit pods and network traffic.
+  - name: ocp4-scc-limit-privilege-escalation
+    rationale: Privileged containers have access to more of the Linux Kernel capabilities and devices. If a privileged container were compromised, an attacker would have full access to the container and host.
+  - name: ocp4-scc-limit-privileged-containers
+    rationale: Privileged containers have access to all Linux Kernel capabilities and devices. If a privileged container were compromised, an attacker would have full access to the container and host.
+  - name: ocp4-scc-limit-process-id-namespace
+    rationale: A container running in the host's PID namespace can inspect processes running outside the container which can be used to escalate privileges outside of the container.
+  - name: ocp4-scc-limit-root-containers
+    rationale: Privileged containers have access to all Linux Kernel capabilities and devices. If a privileged container were compromised, an attacker would have full access to the container and host.
+  - name: ocp4-rbac-limit-secrets-access
+    rationale: Inappropriate access to secrets stored within the Kubernetes cluster can allow for an attacker to gain additional access to the Kubernetes cluster or external resources whose credentials are stored as secrets.
+  - name: ocp4-rbac-pod-creation-access
+    rationale: The ability to create pods in a cluster opens up the cluster for privilege escalation.
+  - name: ocp4-rbac-wildcard-use
+    rationale: The principle of least privilege recommends that users are provided only the access required for their role and nothing more. The use of wildcard rights grants is likely to provide excessive rights to the Kubernetes API.
+  - name: ocp4-configure-network-policies
+    rationale: Kubernetes network policies are enforced by the CNI plugin in use. As such it is important to ensure that the CNI plugin supports both Ingress and Egress network policie
+  - name: ocp4-general-configure-imagepolicywebhook
+    rationale: Image Policy ensures that only approved container images are allowed to be ran on the OpenShift platform.
+  - name: ocp4-general-default-seccomp-profile
+    rationale: Seccomp (secure computing mode) is used to restrict the set of system calls applications can make, allowing cluster administrators greater control over the security of workloads running in the cluster. Kubernetes disables seccomp profiles by default for historical reasons. You should enable it to ensure that the workloads have restricted actions available within the container.
+  - name: ocp4-general-default-namespace-use
+    rationale: Resources in a Kubernetes cluster should be segregated by namespace, to allow for security controls to be applied at that level and to make it easier to manage resources.
+  - name: ocp4-accounts-restrict-service-account-tokens
+    rationale: Mounting service account tokens inside pods can provide an avenue for privilege escalation attacks where an attacker is able to compromise a single pod in the cluster.
+  - name: ocp4-accounts-unique-service-account
+    rationale: Kubernetes provides a default service account which is used by cluster workloads where no specific service account is assigned to the pod. Where access to the Kubernetes API from a pod is required, a specific service account should be created for that pod, and rights granted to that service account. This increases auditability of service account rights and access making it easier and more accurate to trace potential malicious behaviors to a specific service account and project.
+  enableRules:
+  - name: ocp4-controller-insecure-port-disabled
+    rationale: The Controller Manager API service is used for health and metrics information and is available without authentication or encryption. As such, it should only be bound to a localhost interface to minimize the cluster's attack surface.
+  - name: ocp4-controller-rotate-kubelet-server-certs
+    rationale: Enabling kubelet certificate rotation causes the kubelet to both request a serving certificate after bootstrapping its client credentials and rotate the certificate as its existing credentials expire. This automated periodic rotation ensures that there are no downtimes due to expired certificates and thus addressing the availability in the C/I/A security triad.
+  - name: ocp4-controller-secure-port
+    rationale: The Controller Manager API service is used for health and metrics information and is available without authentication or encryption. As such, it should only be bound to a localhost interface to minimize the cluster's attack surface.
+  - name: ocp4-controller-service-account-ca
+    rationale: Service accounts authenticate to the API using tokens signed by a private RSA key. The authentication layer verifies the signature using a matching public RSA key. Configuring the certificate authority file ensures that the API server's signing certificates are validated.
+  - name: ocp4-controller-service-account-private-key
+    rationale: By default if no private key file is specified to the API Server, the API Server uses the private key from the TLS serving certificate to verify service account tokens. To ensure that the keys for service account tokens could be rotated as needed, a separate public/private key pair should be used for signing service account tokens.
+  - name: ocp4-controller-use-service-account
+    rationale: The controller manager creates a service account per controller in kube-system namespace, generates an API token and credentials for it, then builds a dedicated API client with that service account credential for each controller loop to use. Setting the use-service-account-credentials to true runs each control loop within the contoller manager using a separate service account credential. When used in combination with RBAC, this ensures that the control loops run with the minimum permissions required to perform their intended tasks.
+  - name: ocp4-etcd-auto-tls
+    rationale: Without cryptographic integrity protections, information can be altered by unauthorized users without detection. Using self-signed certificates ensures that the certificates are never validated against a certificate authority and could lead to compromised and invalidated data.
+  - name: ocp4-etcd-cert-file
+    rationale: Without cryptographic integrity protections, information can be altered by unauthorized users without detection.
+  - name: ocp4-etcd-client-cert-auth
+    rationale: Without cryptographic integrity protections, information can be altered by unauthorized users without detection.
+  - name: ocp4-etcd-key-file
+    rationale: Without cryptographic integrity protections, information can be altered by unauthorized users without detection.
+  - name: ocp4-etcd-peer-auto-tls
+    rationale: Without cryptographic integrity protections, information can be altered by unauthorized users without detection. Using self-signed certificates ensures that the certificates are never validated against a certificate authority and could lead to compromised and invalidated data.
+  - name: ocp4-etcd-peer-cert-file
+    rationale: Without cryptographic integrity protections, information can be altered by unauthorized users without detection.
+  - name: ocp4-etcd-peer-client-cert-auth
+    rationale: Without cryptographic integrity protections, information can be altered by unauthorized users without detection.
+  - name: ocp4-etcd-peer-key-file
+    rationale: Without cryptographic integrity protections, information can be altered by unauthorized users without detection.
+  - name: ocp4-kubelet-configure-tls-cert
+    rationale: Without cryptographic integrity protections, information can be altered by unauthorized users without detection.
+  - name: ocp4-kubelet-configure-tls-cipher-suites-ingresscontroller
+    rationale: TLS ciphers have had a number of known vulnerabilities and weaknesses, which can reduce the protection provided by them. By default Kubernetes supports a number of TLS ciphersuites including some that have security concerns, weakening the protection provided.
+  - name: ocp4-kubelet-configure-tls-key
+    rationale: Without cryptographic integrity protections, information can be altered by unauthorized users without detection.
+  - name: ocp4-kubelet-disable-readonly-port
+    rationale: OpenShift disables the read-only port ( 10255 ) on all nodes by setting the read-only port kubelet flag to 0. This ensures only authenticated connections are able to receive information about the OpenShift system.
+  - name: ocp4-rbac-debug-role-protects-pprof
+    rationale: Profiling allows for the identification of specific performance bottlenecks. It generates a significant amount of program data that could potentially be exploited to uncover system and program details. If you are not experiencing any bottlenecks and do not need the profiler for troubleshooting purposes, it is recommended to turn it off to reduce the potential attack surface. To ensure the collected data is not exploited, profiling endpoints are secured via RBAC (see cluster-debugger role). By default, the profiling endpoints are accessible only by users bound to cluster-admin or cluster-debugger role. Profiling can not be disabled.
+  - name: ocp4-scheduler-no-bind-address
+    rationale: In OpenShift 4, The Kubernetes Scheduler operator manages and updates the Kubernetes Scheduler deployed on top of OpenShift. By default, the operator exposes metrics via metrics service. The metrics are collected from the Kubernetes Scheduler operator. Profiling data is sent to healthzPort, the port of the localhost healthz endpoint. Changing this value may disrupt components that monitor the kubelet health.
+  - name: ocp4-scheduler-port-is-zero
+    rationale: In OpenShift 4, The Kubernetes Scheduler operator manages and updates the Kubernetes Scheduler deployed on top of OpenShift. By default, the operator exposes metrics via metrics service. The metrics are collected from the Kubernetes Scheduler operator. Profiling data is sent to healthzPort, the port of the localhost healthz endpoint. Changing this value may disrupt components that monitor the kubelet health.
+  extends: ocp4-cis
+  title: My modified CIS  moderate profile

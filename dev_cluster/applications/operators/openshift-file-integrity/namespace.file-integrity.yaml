@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: openshift-file-integrity
+  annotations:
+    openshift.io/comments: 'OpenShift4 File Integrity Operator'
+    openshift.io/description: File Integrity Operator Shared Dev
+    openshift.io/display-name: openshift-file-integrity
+    openshift.io/node-selector: ""
+    argocd.argoproj.io/sync-wave: "1"
+  labels:
+    openshift.io/cluster-monitoring: "true"
+    app.kubernetes.io/managed-by: argo-git
+    poc: "false"

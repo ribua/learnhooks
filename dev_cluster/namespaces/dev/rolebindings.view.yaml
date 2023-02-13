@@ -1,0 +1,17 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: argo-git
+  annotations:
+    argocd.argoproj.io/sync-options: Validate=false
+  name: view
+  namespace: dev
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: customer-view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: dse_viewers
